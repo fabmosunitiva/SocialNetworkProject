@@ -1,5 +1,6 @@
 package org.unitiva.bean;
 
+import java.util.List;
 import java.util.Set;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -11,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 
@@ -29,10 +31,20 @@ public class Post extends PanacheEntityBase{
     @Column(name="corpo")
     private String corpo;
 
-    // @ManyToMany
-    // @JoinTable(name = "pagina_post",
-    //     joinColumns =  @JoinColumn (name="id_pagina"), inverseJoinColumns = @JoinColumn(name="id_post"))
-    // private Set<Pagina> pagina;
+    @ManyToMany
+    @JoinTable(name = "pagina_post",
+        joinColumns =  @JoinColumn (name="id_pagina"), inverseJoinColumns = @JoinColumn(name="id_post"))
+    private Set<Pagina> pagina;
+
+    @ManyToOne
+    @JoinColumn(name = "idutente")
+    private Utente utente;
+
+    @ManyToMany
+    @JoinTable(name = "like_post",
+        joinColumns = @JoinColumn(name = "idpost"),
+        inverseJoinColumns = @JoinColumn(name = "idutente"))
+    private List<Utente> like;
 
     public Post (){}
 

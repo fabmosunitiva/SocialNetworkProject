@@ -1,7 +1,6 @@
 package org.unitiva.bean;
 
 import java.time.LocalDate;
-import java.util.List;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
@@ -10,7 +9,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 
@@ -22,9 +20,6 @@ public class Utente extends PanacheEntityBase {
     @Column(name="idutente")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idutente;
-
-    @Column(name="idfollower")
-    private Long idfollower;
 
     @Column(name="nome")
     private String nome;
@@ -39,11 +34,6 @@ public class Utente extends PanacheEntityBase {
     @JoinColumn(name="idruolo")
     private Ruolo ruolo;
 
-    //  @ManyToMany(mappedBy = "idpost")
-    //  private List<Post> post;
-
-    // @ManyToMany(mappedBy = "idfollower")
-    // private List<Post> idpost_follower;
 
     public Utente (){}
 

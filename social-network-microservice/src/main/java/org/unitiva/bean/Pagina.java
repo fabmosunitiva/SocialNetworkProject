@@ -1,7 +1,5 @@
 package org.unitiva.bean;
 
-import java.util.List;
-
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -10,7 +8,6 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 
 @Entity
@@ -28,12 +25,9 @@ public class Pagina extends PanacheEntityBase{
     @Column(name="descrizione")
     private String descrizione;
 
-    // @ManyToOne
-    // @JoinColumn(name="idutente")
-    // private Utente utente;
-
-    // @OneToMany(mappedBy="idpost")
-    // private List<Post> post;
+    @ManyToOne
+    @JoinColumn(name = "idutente")
+    private Utente utente;
 
     public  Pagina (){}
 
@@ -57,14 +51,6 @@ public class Pagina extends PanacheEntityBase{
     public void setDescrizione(String descrizione) {
         this.descrizione = descrizione;
     }
-
-    // public Utente getUtente() {
-    //     return utente;
-    // }
-
-    // public void setUtente(Utente utente) {
-    //     this.utente = utente;
-    // }
 
     @Override
     public String toString() {
