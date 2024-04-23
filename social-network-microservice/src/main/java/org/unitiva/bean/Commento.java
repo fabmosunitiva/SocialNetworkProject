@@ -39,6 +39,22 @@ public class Commento {
         return idcommento;
     }
 
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    public Post getPost() {
+        return post;
+    }
+
+    public void setPost(Post post) {
+        this.post = post;
+    }
+
     public String getCorpo() {
         return corpo;
     }
@@ -49,8 +65,10 @@ public class Commento {
 
     @Override
     public String toString() {
-        return "Commento [corpo=" + corpo + "]";
+        return "Commento [corpo=" + corpo + ", utente=" + utente + ", post=" + post + "]";
     }
+
+
 
     
 

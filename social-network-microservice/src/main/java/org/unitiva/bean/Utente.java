@@ -48,10 +48,6 @@ public class Utente extends PanacheEntityBase {
         return idutente;
     }
 
-    public void setIdutente(Long idutente) {
-        this.idutente = idutente;
-    }
-
     public String getNome() {
         return nome;
     }
@@ -83,6 +79,8 @@ public class Utente extends PanacheEntityBase {
     public void setRuolo(Ruolo ruolo) {
         this.ruolo = ruolo;
     }
+
+
 
     @Override
     public String toString() {

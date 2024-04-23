@@ -48,9 +48,14 @@ public class Post extends PanacheEntityBase{
 
     public Post (){}
 
-    public Post(String titolo, String corpo) {
+ 
+
+    public Post(String titolo, String corpo, Set<Pagina> pagina, Utente utente, List<Utente> like) {
         this.titolo = titolo;
         this.corpo = corpo;
+        this.pagina = pagina;
+        this.utente = utente;
+        this.like = like;
     }
 
     public String getTitolo() {
@@ -69,11 +74,39 @@ public class Post extends PanacheEntityBase{
         this.corpo = corpo;
     }
 
+    public Set<Pagina> getPagina() {
+        return pagina;
+    }
+
+    public void setPagina(Set<Pagina> pagina) {
+        this.pagina = pagina;
+    }
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    public List<Utente> getLike() {
+        return like;
+    }
+
+    public void setLike(List<Utente> like) {
+        this.like = like;
+    }
+
+
+
     @Override
     public String toString() {
-        return "Post [titolo=" + titolo + ", corpo=" + corpo + " ]";
+        return "Post [titolo=" + titolo + ", corpo=" + corpo + ", pagina=" + pagina + ", utente=" + utente + ", like="
+                + like + "]";
     }
-    
+
+
 
 
 }

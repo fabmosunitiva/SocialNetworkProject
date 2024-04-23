@@ -31,9 +31,10 @@ public class Pagina extends PanacheEntityBase{
 
     public  Pagina (){}
 
-    public Pagina(String nome, String descrizione) {
+    public Pagina(String nome, String descrizione, Utente utente) {
         this.nome = nome;
         this.descrizione = descrizione;
+        this.utente = utente;
     }
 
     public String getNome() {
@@ -52,10 +53,22 @@ public class Pagina extends PanacheEntityBase{
         this.descrizione = descrizione;
     }
 
+    
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
     @Override
     public String toString() {
-        return "Pagina [nome=" + nome + ", descrizione=" + descrizione + "]";
+        return "Pagina [nome=" + nome + ", descrizione=" + descrizione + ", utente=" + utente + "]";
     }
+
+
 
     
 
