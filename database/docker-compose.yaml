@@ -1,0 +1,15 @@
+services:
+  my-postgres:
+    image: postgres:latest  # Use your custom image name
+    environment:
+      POSTGRES_PASSWORD: dev  # Optional (if not set in the image)
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PORT: 5567
+      POSTGRES_DB: socialdb
+    ports:
+      - "5566:5432" 
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Persistent storage for data
+
+volumes:
+  postgres_data: {}  # Define an empty volume
