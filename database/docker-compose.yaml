@@ -1,6 +1,6 @@
 services:
   my-postgres:
-    image: postgres:latest  # Use your custom image name
+    image: my-social-image  # Use your custom image name
     environment:
       POSTGRES_PASSWORD: dev  # Optional (if not set in the image)
       POSTGRES_USERNAME: postgres
