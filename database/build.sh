@@ -7,11 +7,22 @@ is_windows() {
     *) return 1;;
   esac
 }
+
+# Detect OS type
+if is_windows; then
+  # Windows commands
+  DOCKER_BUILD_CMD="docker build"
+  DOCKER_COMPOSE_CMD="docker-compose"
+  # Adjust path separators for Windows (replace forward slashes with backslashes)
+  DOCKERFILE_PATH="./"
+  COMPOSE_FILE_PATH="./docker-compose.yml"
+else
   # Linux commands
   DOCKER_BUILD_CMD="docker build"
   DOCKER_COMPOSE_CMD="docker-compose"
   DOCKERFILE_PATH="./"
   COMPOSE_FILE_PATH="./docker-compose.yml"
+fi
 
 # Build the image
 echo "Building Docker image..."
