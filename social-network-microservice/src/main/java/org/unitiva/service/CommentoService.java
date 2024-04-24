@@ -1,7 +1,10 @@
 package org.unitiva.service;
 
 import org.unitiva.bean.Commento;
+import org.unitiva.dto.CommentoDTO;
 import org.unitiva.repository.CommentoRepository;
+import org.unitiva.repository.PostRepository;
+import org.unitiva.repository.UtenteRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
@@ -12,16 +15,19 @@ public class CommentoService {
     @Inject
     CommentoRepository commentoRepository;
 
-    public void save (Commento commento){
-        commentoRepository.persist(commento);
-    }
+    @Inject
+    UtenteRepository utenteRepository;
 
-    public Commento findById (Long id){
-        return commentoRepository.findById(id);
-    }
+    @Inject
+    PostRepository postRepository;
 
-    public void deleteById (Long id){
-        commentoRepository.deleteById(id);
+
+    public void newCommento (CommentoDTO commentoDTO){        
+        Commento commento = new Commento();
+        commento.setCorpo(commentoDTO.getCorpo());
+        commento.setPost(postRepository.retrievePostById(commentoDTO.getIdpost()));
+        commento.setUtente(utenteRepository.retrieveUtenteById(commentoDTO.getIdutente()));
+        commentoRepository.save(commento);
     }
 
 }
