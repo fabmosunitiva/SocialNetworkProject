@@ -7,5 +7,32 @@ import jakarta.enterprise.context.ApplicationScoped;
 
 @ApplicationScoped
 public class PostRepository implements PanacheRepositoryBase<Post,Long>{
+    public void createPost(Post utente){
+        try {
+            persist(utente);  
+        } catch (Exception e) {
+            throw new Error(e.getMessage());
+        }
+    }
 
+    public void updatePost(Post utente){
+        try {
+            persist(utente);
+
+        } catch (Exception e) {
+            throw new Error(e.getMessage());
+        }
+    }
+
+    public void deletePost(Long id){
+        try {
+            deleteById(id);
+        } catch (Exception e) {
+            throw new Error(e.getMessage());
+        }
+    }
+
+    public Post retrievePostById(Long id){
+        return findById(id);
+    }
 }
