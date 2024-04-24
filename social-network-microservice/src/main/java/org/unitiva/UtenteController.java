@@ -33,7 +33,7 @@ public class UtenteController {
             service.addUtente(utente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
         }catch(Exception e){
-            String message = "{\"errorCode\":5,\"message\": "+"\"Errore nell'operazione di creazione\"}";
+            String message = "{\"errorCode\":1,\"message\": "+"\"Errore nell'operazione di creazione\"}";
             return Response.status(Response.Status.NOT_MODIFIED)
             .entity(message)
             .build();
@@ -51,7 +51,7 @@ public class UtenteController {
             service.updateUtente(utente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
         }catch(Exception e){
-            String message = "{\"errorCode\":5,\"message\": "+"\"Errore nell'operazione di update\"}";
+            String message = "{\"errorCode\":2,\"message\": "+"\"Errore nell'operazione di update\"}";
             return Response.status(Response.Status.NOT_MODIFIED)
             .entity(message)
             .build();
@@ -63,13 +63,13 @@ public class UtenteController {
     @Path("/Delete")
     @Transactional
     @Valid
-    public Response deleteUtente(Long Id) throws JsonProcessingException{
+    public Response deleteUtente(Long idUtente) throws JsonProcessingException{
         try{
-            service.deleteById(Id);
+            service.deleteById(idUtente);
             String message = "{\"message\": "+"\"Delete eseguita con successo\"}";
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
         }catch(Exception e){
-            String message = "{\"errorCode\":5,\"message\": "+"\"Errore nell'operazione di deelet\"}";
+            String message = "{\"errorCode\":3,\"message\": "+"\"Errore nell'operazione di deelet\"}";
             return Response.status(Response.Status.NOT_MODIFIED)
             .entity(message)
             .build();
@@ -81,9 +81,9 @@ public class UtenteController {
     @Path("/GetUtenteById")
     @Transactional
     @Valid
-    public Response getUtenteById(@QueryParam("id") Long Id) throws JsonProcessingException{
+    public Response getUtenteById(@QueryParam("id") Long idUtente) throws JsonProcessingException{
         try{
-            Utente utente = service.retrieveById(Id);
+            Utente utente = service.retrieveById(idUtente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(utente).build();
         }catch(Exception e){
             String message = "{\"errorCode\":5,\"message\": "+"\"Errore nell'operazione di update\"}";
