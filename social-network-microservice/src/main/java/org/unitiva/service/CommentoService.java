@@ -28,7 +28,16 @@ public class CommentoService {
     }
 
     public void updateCommento (CommentoDTO commentoDTO){
-        commentoRepository.updateCommento(commentoDTO);
+        try{
+            Long idutenteRepository = commentoRepository.findById(commentoDTO.getIdcommento()).getUtente().getIdutente();
+            if (commentoDTO.getIdutente() == idutenteRepository)
+                commentoRepository.updateCommento(commentoDTO);
+            else 
+                throw new Error("Utente non autorizzato alla modifica del commento");
+        } catch (Exception e){
+            throw new Error(e.getMessage());
+        }
+        
     }
 
 }

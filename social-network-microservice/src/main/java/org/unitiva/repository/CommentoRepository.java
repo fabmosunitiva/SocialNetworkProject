@@ -27,27 +27,27 @@ public class CommentoRepository implements PanacheRepositoryBase<Commento,Long> 
             throw new Error(e.getMessage());
         }
     }
-
-    public Commento findById (Long id){
-        return findById(id);
-    }
-
-    public void deleteCommento(Long id){
-        try{
-            deleteById(id);
-        } catch (Exception e){
-            throw new Error(e.getMessage());
-        }
-    }
-
+    
     public void updateCommento (CommentoDTO commentoDTO ){
         try{
             Commento commento = findById(commentoDTO.getIdcommento());
             commento.setCorpo(commentoDTO.getCorpo());
             persist(commento);
-
+            
         } catch (Exception e){
             throw new Error(e.getMessage());
         }
     }
+    
+        public Commento findById (Long id){
+            return findById(id);
+        }
+    
+        public void deleteCommento(Long id){
+            try{
+                deleteById(id);
+            } catch (Exception e){
+                throw new Error(e.getMessage());
+            }
+        }
 }
