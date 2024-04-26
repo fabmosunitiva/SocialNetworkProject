@@ -1,5 +1,8 @@
 package org.unitiva.exception;
 
+import jakarta.enterprise.context.ApplicationScoped;
+
+@ApplicationScoped
 public class ResponseObject {
     private String message;
 

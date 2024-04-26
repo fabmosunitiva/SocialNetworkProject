@@ -35,17 +35,25 @@ public class UtenteService {
             utenteRepository.createUtente(utente);
     }
 
-    public Utente retrieveById (Long id) throws UserNotFoundException, DataAccessException{
+    public Utente retrieveById (Long id) throws UserNotFoundException,DataAccessException{
 
-        Utente utente = utenteRepository.findById(id);
-        if(utente == null){
-            throw new UserNotFoundException(id);
+        try {
+            Utente utente = utenteRepository.retrieveUtenteById(id);
+            if(utente == null){
+                throw new UserNotFoundException(id);
+            }
+            return utente;
+        } catch (DataAccessException e) {
+            throw new DataAccessException(e.getMessage(), e.getCause());
         }
-        return utente;
     }
 
-    public void deleteById (Long id) throws UserNotFoundException, DataAccessException{
-        utenteRepository.deleteById(id);
+    public void deleteById (Long id) throws UserNotFoundException,DataAccessException{
+        try {
+            utenteRepository.deleteById(id);
+        } catch (Exception e) {
+            throw new DataAccessException(e.getMessage(), e.getCause());
+        }
     }
 
     private Utente createUtenteFromDto(Utente utente, UtenteDTO utenteDto) throws NullPointerException{
