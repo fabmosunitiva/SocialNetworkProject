@@ -5,6 +5,8 @@ import java.time.LocalDate;
 import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
+import org.unitiva.exception.UserNotFoundException;
+import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.RuoloRepository;
 import org.unitiva.repository.UtenteRepository;
 
@@ -20,36 +22,33 @@ public class UtenteService {
     @Inject
     RuoloRepository ruoloRepository;
 
-    public void addUtente(UtenteDTO utenteDto){
-        try {
+    public void addUtente(UtenteDTO utenteDto) throws DataAccessException,NullPointerException{
             Utente utente = new Utente();
             utente = createUtenteFromDto(utente, utenteDto);
             utenteRepository.createUtente(utente);
-        } catch (Exception e) {
-            throw new Error(e.getMessage());
-        }
     }
 
     
-    public void updateUtente(Long id, UtenteDTO utenteDto){
-        try {
+    public void updateUtente(Long id, UtenteDTO utenteDto) throws DataAccessException,UserNotFoundException,NullPointerException{
             Utente utente = utenteRepository.retrieveUtenteById(id);
             utente = createUtenteFromDto(utente, utenteDto);
             utenteRepository.createUtente(utente);
-        } catch (Exception e) {
-            throw new Error(e.getMessage());
+    }
+
+    public Utente retrieveById (Long id) throws UserNotFoundException, DataAccessException{
+
+        Utente utente = utenteRepository.findById(id);
+        if(utente == null){
+            throw new UserNotFoundException(id);
         }
+        return utente;
     }
 
-    public Utente retrieveById (Long id){
-        return utenteRepository.findById(id);
-    }
-
-    public void deleteById (Long id){
+    public void deleteById (Long id) throws UserNotFoundException, DataAccessException{
         utenteRepository.deleteById(id);
     }
 
-    private Utente createUtenteFromDto(Utente utente, UtenteDTO utenteDto){
+    private Utente createUtenteFromDto(Utente utente, UtenteDTO utenteDto) throws NullPointerException{
         String nome = utenteDto.getNome();
         String cognome = utenteDto.getCognome();
         LocalDate dataDiNascita = utenteDto.getDatanascita();
