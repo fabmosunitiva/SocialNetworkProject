@@ -1,4 +1,4 @@
-package org.unitiva;
+package org.unitiva.controller;
 
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
