@@ -1,5 +1,7 @@
 package org.unitiva.service;
 
+import java.time.LocalDate;
+
 import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
@@ -20,7 +22,8 @@ public class UtenteService {
 
     public void addUtente(UtenteDTO utenteDto){
         try {
-            Utente utente = createUtente(utenteDto);
+            Utente utente = new Utente();
+            utente = createUtenteFromDto(utente, utenteDto);
             utenteRepository.createUtente(utente);
         } catch (Exception e) {
             throw new Error(e.getMessage());
@@ -28,10 +31,11 @@ public class UtenteService {
     }
 
     
-    public void updateUtente(UtenteDTO utenteDto){
+    public void updateUtente(Long id, UtenteDTO utenteDto){
         try {
-            Utente utente = createUtente(utenteDto);
-            utenteRepository.updateUtente(utente);
+            Utente utente = utenteRepository.retrieveUtenteById(id);
+            utente = createUtenteFromDto(utente, utenteDto);
+            utenteRepository.createUtente(utente);
         } catch (Exception e) {
             throw new Error(e.getMessage());
         }
@@ -45,14 +49,16 @@ public class UtenteService {
         utenteRepository.deleteById(id);
     }
 
-    private Utente createUtente(UtenteDTO utenteDto){
-        Utente utente = new Utente();
-        utente.setNome(utenteDto.getNome());
-        utente.setCognome(utenteDto.getCognome());
-        utente.setDatanascita(utenteDto.getDatanascita());
+    private Utente createUtenteFromDto(Utente utente, UtenteDTO utenteDto){
+        String nome = utenteDto.getNome();
+        String cognome = utenteDto.getCognome();
+        LocalDate dataDiNascita = utenteDto.getDatanascita();
         Long idRuolo = utenteDto.getRuolo();
-        Ruolo ruolo = ruoloRepository.retrieveRuoloById(idRuolo);
-        utente.setRuolo(ruolo); 
+        Ruolo ruolo = ruoloRepository.findById(idRuolo);
+        utente.setNome(nome);
+        utente.setCognome(cognome);
+        utente.setDatanascita(dataDiNascita);
+        utente.setRuolo(ruolo);
         return utente;
     }
 }

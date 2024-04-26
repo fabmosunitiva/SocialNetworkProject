@@ -10,6 +10,7 @@ import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
@@ -45,10 +46,10 @@ public class UtenteController {
     @Path("/Update")
     @Transactional
     @Valid
-    public Response updateUtente(UtenteDTO utente) throws JsonProcessingException{
+    public Response updateUtente(@QueryParam("id") Long idUtente, UtenteDTO utente) throws JsonProcessingException{
         try{
             String message = "{\"message\": "+"\"Update eseguita con successo\"}";
-            service.updateUtente(utente);
+            service.updateUtente(idUtente, utente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
         }catch(Exception e){
             String message = "{\"errorCode\":2,\"message\": "+"\"Errore nell'operazione di update\"}";
@@ -58,12 +59,12 @@ public class UtenteController {
         }
     }
 
-    @POST
+    @DELETE
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/Delete")
     @Transactional
     @Valid
-    public Response deleteUtente(Long idUtente) throws JsonProcessingException{
+    public Response deleteUtente(@QueryParam("id") Long idUtente) throws JsonProcessingException{
         try{
             service.deleteById(idUtente);
             String message = "{\"message\": "+"\"Delete eseguita con successo\"}";
