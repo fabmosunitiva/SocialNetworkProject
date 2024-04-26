@@ -7,7 +7,16 @@ public class CommentoDTO {
     private Long idutente;
     private Long idpost;
 
+    public CommentoDTO (){}
+
     public CommentoDTO (String corpo,Long idutente,Long idpost){
+        this.corpo=corpo;
+        this.idutente=idutente;
+        this.idpost=idpost;
+    }
+
+    public CommentoDTO (Long idcommento, String corpo,Long idutente,Long idpost){
+        this.idcommento=idcommento;
         this.corpo=corpo;
         this.idutente=idutente;
         this.idpost=idpost;

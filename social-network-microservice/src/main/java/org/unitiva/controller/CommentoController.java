@@ -8,7 +8,9 @@ import org.unitiva.service.CommentoService;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.POST;
+import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.MediaType;
@@ -35,7 +37,7 @@ public class CommentoController{
         }
     }
 
-    @POST
+    @PUT
     @Path("/update")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
@@ -49,15 +51,15 @@ public class CommentoController{
         }
     }
 
-    @POST
+    @DELETE
     @Path("/delete")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response deleteCommento (@QueryParam("id") Long id){
+    public Response deleteCommento (@QueryParam("idCommento") Long idCommento, @QueryParam("idUtente") Long idUtente){
         try{
-            commentoService.deleteById(id);
+            commentoService.deleteById(idCommento, idUtente);
             String message = "{\"message\": "+"\"Delete eseguita con successo\"}";
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();                
         } catch (Exception e){
             String message = "{\"errorCode\":3,\"message\": "+"\"Errore nell'operazione di Delete\"}";
             return Response.status(Response.Status.NOT_MODIFIED).entity(message).build();
@@ -79,17 +81,6 @@ public class CommentoController{
             return Response.status(Response.Status.NOT_MODIFIED).entity(message).build();
         }
     }
-
-
-
-
-
-
-
-
-
-
-
 
 
 }
