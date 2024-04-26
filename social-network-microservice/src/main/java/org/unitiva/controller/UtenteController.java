@@ -2,10 +2,14 @@ package org.unitiva.controller;
 
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
+import org.unitiva.exception.ResponseObject;
+import org.unitiva.exception.UserNotFoundException;
+import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.service.UtenteService;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 
+import io.quarkus.logging.Log;
 import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -23,6 +27,9 @@ public class UtenteController {
     @Inject
     UtenteService service;
 
+    @Inject
+    ResponseObject response;
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Path("/Create")
@@ -30,13 +37,16 @@ public class UtenteController {
     @Valid
     public Response createUtente(UtenteDTO utente) throws JsonProcessingException{
         try{
-            String message = "{\"message\": "+"\"Create eseguita con successo\"}";
+            response.setMessage("Creazione Avvenuta con successo");
             service.addUtente(utente);
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
-        }catch(Exception e){
-            String message = "{\"errorCode\":1,\"message\": "+"\"Errore nell'operazione di creazione\"}";
-            return Response.status(Response.Status.NOT_MODIFIED)
-            .entity(message)
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }catch(DataAccessException e){
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String methodName = stackTrace[1].getMethodName();
+            Log.error("Errore in" +methodName+ "errore ad accedere al dato " + e);
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            .entity(response)
             .build();
         }
     }
@@ -48,13 +58,16 @@ public class UtenteController {
     @Valid
     public Response updateUtente(@QueryParam("id") Long idUtente, UtenteDTO utente) throws JsonProcessingException{
         try{
-            String message = "{\"message\": "+"\"Update eseguita con successo\"}";
             service.updateUtente(idUtente, utente);
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
-        }catch(Exception e){
-            String message = "{\"errorCode\":2,\"message\": "+"\"Errore nell'operazione di update\"}";
-            return Response.status(Response.Status.NOT_MODIFIED)
-            .entity(message)
+            response.setMessage("Update avvenuto con successo");
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }catch(DataAccessException e){
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String methodName = stackTrace[1].getMethodName();
+            Log.error("Errore in" +methodName+ "errore ad accedere al dato " + e);
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            .entity(response)
             .build();
         }
     }
@@ -67,12 +80,15 @@ public class UtenteController {
     public Response deleteUtente(@QueryParam("id") Long idUtente) throws JsonProcessingException{
         try{
             service.deleteById(idUtente);
-            String message = "{\"message\": "+"\"Delete eseguita con successo\"}";
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
-        }catch(Exception e){
-            String message = "{\"errorCode\":3,\"message\": "+"\"Errore nell'operazione di deelet\"}";
+            response.setMessage("Delete Avvenuta con successo");
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }catch(DataAccessException e){
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String methodName = stackTrace[1].getMethodName();  // Get method name from stack trace (index 1)
+            Log.error("Errore in " +methodName+ " errore ad accedere al dato " + e);
+            response.setMessage(e.getMessage());
             return Response.status(Response.Status.NOT_MODIFIED)
-            .entity(message)
+            .entity(response)
             .build();
         }
     }
@@ -82,14 +98,24 @@ public class UtenteController {
     @Path("/GetUtenteById")
     @Transactional
     @Valid
-    public Response getUtenteById(@QueryParam("id") Long idUtente) throws JsonProcessingException{
+    public Response getUtenteById(@QueryParam("id") Long idUtente) throws JsonProcessingException, DataAccessException{
         try{
             Utente utente = service.retrieveById(idUtente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(utente).build();
-        }catch(Exception e){
-            String message = "{\"errorCode\":5,\"message\": "+"\"Errore nell'operazione di update\"}";
-            return Response.status(Response.Status.NOT_MODIFIED)
-            .entity(message)
+        }catch(UserNotFoundException e){
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String methodName = stackTrace[1].getMethodName();
+            Log.error("Errore in " +methodName+ " utente non trovato" + e);
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND)
+            .entity(response)
+            .build();
+        }
+        catch(DataAccessException e){
+            Log.error("Errore in getUtenteById errore ad accedere al dato " + e);
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            .entity(response)
             .build();
         }
     }
