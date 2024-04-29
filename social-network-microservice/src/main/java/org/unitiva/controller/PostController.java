@@ -2,6 +2,7 @@ package org.unitiva.controller;
 
 import org.unitiva.bean.Post;
 import org.unitiva.dto.PostDTO;
+import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.ResponseObject;
 import org.unitiva.exception.UserNotAllowed;
 import org.unitiva.exception.database.DataAccessException;
@@ -26,6 +27,8 @@ public class PostController {
     @Inject
     PostService postService;
 
+    public ResponseObject response = new ResponseObject();
+
     @POST
     @Path("/new")
     @Consumes(MediaType.APPLICATION_JSON)
@@ -33,11 +36,16 @@ public class PostController {
     public Response newPost (PostDTO postDTO){
         try{
             postService.save(postDTO);
-            String message = "{\"message\": "+"\"Create eseguita con successo\"}";
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
-        } catch (Exception e){
-            String message = "{\"errorCode\":1,\"message\": "+"\"Errore nell'operazione di creazione\"}";
-            return Response.status(Response.Status.NOT_MODIFIED).entity(message).build();
+            response.setMessage("Post inserito con successo");
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }
+        catch (DataAccessException e){
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }
+        catch (Exception e){
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).type(MediaType.APPLICATION_JSON).entity(response).build();
         }
     }
 
@@ -48,10 +56,14 @@ public class PostController {
     public Response updateCommento (PostDTO postDTO) {
         try{
             postService.updatePost(postDTO);
-            String message = "{\"message\": "+"\"Update eseguita con successo\"}";
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();
-        } catch (Exception e){
-            return Response.status(Response.Status.NOT_MODIFIED).entity(e.getMessage()).build();
+            response.setMessage("Post aggioranto con successo");
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }catch (DataAccessException e){
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.NOT_MODIFIED).entity(response).build();
+        }catch(UserNotAllowed userNotAllowed){
+            response.setMessage(userNotAllowed.getMessage());
+            return Response.status(Response.Status.UNAUTHORIZED).entity(response).build();
         }
     }
 
@@ -62,18 +74,16 @@ public class PostController {
     public Response deletePost (@QueryParam("idPost") Long idPost, @QueryParam("idUtente") Long idUtente) throws UserNotAllowed,DataAccessException{
         try{
             postService.deleteById(idPost, idUtente);
-            String message = "{\"message\": "+"\"Delete eseguita con successo\"}";
-            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(message).build();                
+            response.setMessage("Post eliminato con successo");
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();                
         } catch (UserNotAllowed e){
             Log.info(e.getMessage());
-            ResponseObject res = new ResponseObject(e.getMessage());
-            // String message = "{\"errorCode\":3,\"message\": "+"\"Errore nell'operazione di Delete\"}";
-            return Response.status(Response.Status.FORBIDDEN).entity(res).type(MediaType.APPLICATION_JSON).build();
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.FORBIDDEN).entity(response).type(MediaType.APPLICATION_JSON).build();
         }
         catch (DataAccessException e){
-            ResponseObject res = new ResponseObject(e.getMessage());
-            // String message = "{\"errorCode\":3,\"message\": "+"\"Errore nell'operazione di Delete\"}";
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(res).type(MediaType.APPLICATION_JSON).build();
+            response.setMessage(e.getMessage());
+           return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response).type(MediaType.APPLICATION_JSON).build();
         }
     }
 
@@ -81,13 +91,16 @@ public class PostController {
     @Path("/find")
     @Consumes(MediaType.APPLICATION_JSON)
     @Transactional
-    public Response findCommento (@QueryParam("id") Long id){
+    public Response findPost (@QueryParam("id") Long id) throws NotFoundException,DataAccessException{
         try{
             Post post = postService.retrieveById(id);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(post).build();
-        } catch (Exception e){
-            String message = "{\"errorCode\":5,\"message\": "+"\"Errore nell'operazione di Delete\"}";
-            return Response.status(Response.Status.NOT_MODIFIED).entity(message).build();
+        }catch (NotFoundException e){
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND).entity(response).build();
+        }catch (DataAccessException e){
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(response).build();
         }
     }
 
