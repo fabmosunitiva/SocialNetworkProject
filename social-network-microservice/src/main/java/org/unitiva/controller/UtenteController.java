@@ -10,7 +10,7 @@ import org.unitiva.service.UtenteService;
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
-import jakarta.json.bind.JsonbException;
+
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
@@ -38,7 +38,7 @@ public class UtenteController {
     @Path("/Create")
     @Transactional
     @Valid
-    public Response createUtente(UtenteDTO utente) throws JsonbException{
+    public Response createUtente(UtenteDTO utente) {
         try{
             response.setMessage("Creazione Avvenuta con successo");
             service.addUtente(utente);
@@ -52,7 +52,7 @@ public class UtenteController {
             .entity(response)
             .build();
         }catch(Exception e){
-            Log.error(e.getMessage());
+            Log.error(e);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
             .build();
         }
@@ -63,7 +63,7 @@ public class UtenteController {
     @Path("/Update")
     @Transactional
     @Valid
-    public Response updateUtente(@QueryParam("id") Long idUtente, UtenteDTO utente) throws JsonbException{
+    public Response updateUtente(@QueryParam("id") Long idUtente, UtenteDTO utente) {
         try{
             service.updateUtente(idUtente, utente);
             response.setMessage("Update avvenuto con successo");
@@ -84,7 +84,7 @@ public class UtenteController {
     @Path("/Delete")
     @Transactional
     @Valid
-    public Response deleteUtente(@QueryParam("id") Long idUtente) throws JsonbException{
+    public Response deleteUtente(@QueryParam("id") Long idUtente){
         try{
             service.deleteById(idUtente);
             response.setMessage("Delete Avvenuta con successo");
@@ -105,7 +105,7 @@ public class UtenteController {
     @Path("/GetUtenteById")
     @Transactional
     @Valid
-    public Response getUtenteById(@QueryParam("id") Long idUtente) throws JsonbException{
+    public Response getUtenteById(@QueryParam("id") Long idUtente) {
         try{
             Utente utente = service.retrieveById(idUtente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(utente).build();

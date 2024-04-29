@@ -61,7 +61,7 @@ public class UtenteService {
         String cognome = utenteDto.getCognome();
         LocalDate dataDiNascita = utenteDto.getDatanascita();
         Long idRuolo = utenteDto.getRuolo();
-        Ruolo ruolo = ruoloRepository.findById(idRuolo);
+        Ruolo ruolo = ruoloRepository.retrieveRuoloById(idRuolo);
         utente.setNome(nome);
         utente.setCognome(cognome);
         utente.setDatanascita(dataDiNascita);
