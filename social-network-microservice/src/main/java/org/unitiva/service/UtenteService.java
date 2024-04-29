@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
-import org.unitiva.exception.UserNotFoundException;
+import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.RuoloRepository;
 import org.unitiva.repository.UtenteRepository;
@@ -29,18 +29,18 @@ public class UtenteService {
     }
 
     
-    public void updateUtente(Long id, UtenteDTO utenteDto) throws DataAccessException,UserNotFoundException,NullPointerException{
+    public void updateUtente(Long id, UtenteDTO utenteDto) throws DataAccessException,NotFoundException,NullPointerException{
             Utente utente = utenteRepository.retrieveUtenteById(id);
             utente = createUtenteFromDto(utente, utenteDto);
             utenteRepository.createUtente(utente);
     }
 
-    public Utente retrieveById (Long id) throws UserNotFoundException,DataAccessException{
+    public Utente retrieveById (Long id) throws NotFoundException,DataAccessException{
 
         try {
             Utente utente = utenteRepository.retrieveUtenteById(id);
             if(utente == null){
-                throw new UserNotFoundException(id);
+                throw new NotFoundException(id,"Utente non trovato");
             }
             return utente;
         } catch (DataAccessException e) {
@@ -48,7 +48,7 @@ public class UtenteService {
         }
     }
 
-    public void deleteById (Long id) throws UserNotFoundException,DataAccessException{
+    public void deleteById (Long id) throws NotFoundException,DataAccessException{
         try {
             utenteRepository.deleteById(id);
         } catch (Exception e) {

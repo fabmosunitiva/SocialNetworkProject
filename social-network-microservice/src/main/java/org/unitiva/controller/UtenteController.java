@@ -3,7 +3,6 @@ package org.unitiva.controller;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
 import org.unitiva.exception.ResponseObject;
-import org.unitiva.exception.UserNotFoundException;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.service.UtenteService;
 
@@ -16,6 +15,7 @@ import jakarta.validation.Valid;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
+import jakarta.ws.rs.NotFoundException;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
@@ -109,7 +109,7 @@ public class UtenteController {
         try{
             Utente utente = service.retrieveById(idUtente);
             return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(utente).build();
-        }catch(UserNotFoundException e){
+        }catch(NotFoundException e){
             StackTraceElement[] stackTrace = e.getStackTrace();
             String methodName = stackTrace[1].getMethodName();
             Log.error("Errore in " +methodName+ " utente non trovato" + e);
