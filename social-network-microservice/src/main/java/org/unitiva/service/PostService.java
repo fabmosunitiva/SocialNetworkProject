@@ -1,6 +1,7 @@
 package org.unitiva.service;
 
 import org.unitiva.bean.Post;
+import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.PostDTO;
 import org.unitiva.exception.NotFoundException;
@@ -47,15 +48,19 @@ public class PostService {
 
     public void deleteById (Long idPost, Long idUtente) throws DataAccessException,NotFoundException{
             Post post = retrieveById(idPost);
+            Utente autorePost = post.getUtente();
             Utente utente = utenteService.retrieveById(idUtente);
-                if (utente.getRuolo().getDescrizione().equalsIgnoreCase("Amministratore") 
-                    || utente.getRuolo().getDescrizione().equalsIgnoreCase("Moderatore") 
-                    || post.getUtente().getIdutente().equals(idUtente)) {
-                        postRepository.deletePost(idPost);   
-                                
-                } else  {
-                    throw new UserNotAllowed(idUtente,utente.getRuolo().getDescrizione());
-                }
+            Ruolo ruoloUtente = utente.getRuolo();
+            if (hadPrivileges(ruoloUtente) || autorePost.equals(utente)) {
+                postRepository.deletePost(idPost);   
+            } else  {
+                throw new UserNotAllowed(idUtente,utente.getRuolo().getDescrizione());
+            }
+    }
+
+    private boolean hadPrivileges(Ruolo ruolo){
+        return ruolo.getDescrizione().equalsIgnoreCase("Amministratore") 
+        || ruolo.getDescrizione().equalsIgnoreCase("Moderatore");
     }
 
 }
