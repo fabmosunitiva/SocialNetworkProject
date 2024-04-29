@@ -25,6 +25,12 @@ public class PostDTO {
         this.idUtente = idUtente;
     }
 
+    public PostDTO(String titolo, String corpo, Long idUtente) {
+        this.titolo = titolo;
+        this.corpo = corpo;
+        this.idUtente = idUtente;
+    }
+
     public String getTitolo() {
         return titolo;
     }

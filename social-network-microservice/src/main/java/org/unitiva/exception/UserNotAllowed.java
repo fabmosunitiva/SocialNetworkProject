@@ -5,7 +5,7 @@ public class UserNotAllowed extends RuntimeException {
         private final String ruolo;
 
         public UserNotAllowed(Long id, String ruolo) {
-          super("Utente id: "+ id + "non ha il permesso con ruolo: " + ruolo);
+          super("Utente id: "+ id + " non ha il permesso con ruolo: " + ruolo);
           this.id = id;
           this.ruolo = ruolo;
         }

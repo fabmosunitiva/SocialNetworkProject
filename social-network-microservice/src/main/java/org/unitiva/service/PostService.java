@@ -3,6 +3,9 @@ package org.unitiva.service;
 import org.unitiva.bean.Post;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.PostDTO;
+import org.unitiva.exception.UserNotAllowed;
+import org.unitiva.exception.UserNotFoundException;
+import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.PostRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -37,20 +40,17 @@ public class PostService {
         return postRepository.findById(id);
     }
 
-    public void deleteById (Long idPost, Long idUtente){
-        try{
+    public void deleteById (Long idPost, Long idUtente) throws DataAccessException,UserNotFoundException{
             Post post = retrieveById(idPost);
             Utente utente = utenteService.retrieveById(idUtente);
                 if (utente.getRuolo().getDescrizione().equalsIgnoreCase("Amministratore") 
                     || utente.getRuolo().getDescrizione().equalsIgnoreCase("Moderatore") 
-                    || post.getUtente().getIdutente() == idUtente) {
-                        postRepository.deletePost(idPost);           
+                    || post.getUtente().getIdutente().equals(idUtente)) {
+                        postRepository.deletePost(idPost);   
+                                
                 } else  {
-                    throw new Error("Utente non autorizzato");
+                    throw new UserNotAllowed(idUtente,utente.getRuolo().getDescrizione());
                 }
-            } catch (Exception e){
-                throw new Error(e.getMessage());
-            }
     }
 
 }
