@@ -9,7 +9,6 @@ import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
 import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.database.DataAccessException;
-import org.unitiva.repository.RuoloRepository;
 import org.unitiva.repository.UtenteRepository;
 
 import jakarta.enterprise.context.ApplicationScoped;
@@ -69,6 +68,7 @@ public class UtenteService {
         }
         Utente utenteLike = retrieveById(idUtente);
         likes.add(utenteLike);
+        postToLike.setLike(likes);
     }
 
     private Utente createUtenteFromDto(Utente utente, UtenteDTO utenteDto) throws NullPointerException{
