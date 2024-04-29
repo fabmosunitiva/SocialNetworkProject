@@ -1,7 +1,9 @@
 package org.unitiva.service;
 
 import java.time.LocalDate;
+import java.util.HashSet;
 
+import org.unitiva.bean.Post;
 import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.UtenteDTO;
@@ -20,7 +22,10 @@ public class UtenteService {
     UtenteRepository utenteRepository;
 
     @Inject
-    RuoloRepository ruoloRepository;
+    RuoloService ruoloRepository;
+
+    @Inject
+    PostService postService;
 
     public void addUtente(UtenteDTO utenteDto) throws DataAccessException,NullPointerException{
             Utente utente = new Utente();
@@ -56,12 +61,22 @@ public class UtenteService {
         }
     }
 
+    public void addLikeToPost(Long idPost, Long idUtente)throws NotFoundException,DataAccessException{
+        Post postToLike = postService.retrieveById(idPost);
+        HashSet<Utente> likes = postToLike.getLike();
+        if(likes == null){
+            likes = new HashSet<Utente>();
+        }
+        Utente utenteLike = retrieveById(idUtente);
+        likes.add(utenteLike);
+    }
+
     private Utente createUtenteFromDto(Utente utente, UtenteDTO utenteDto) throws NullPointerException{
         String nome = utenteDto.getNome();
         String cognome = utenteDto.getCognome();
         LocalDate dataDiNascita = utenteDto.getDatanascita();
         Long idRuolo = utenteDto.getRuolo();
-        Ruolo ruolo = ruoloRepository.retrieveRuoloById(idRuolo);
+        Ruolo ruolo = ruoloRepository.findRuoloById(idRuolo);
         utente.setNome(nome);
         utente.setCognome(cognome);
         utente.setDatanascita(dataDiNascita);

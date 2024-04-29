@@ -1,6 +1,6 @@
 package org.unitiva.bean;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -44,13 +44,13 @@ public class Post extends PanacheEntityBase{
     @JoinTable(name = "like_post",
         joinColumns = @JoinColumn(name = "idpost"),
         inverseJoinColumns = @JoinColumn(name = "idutente"))
-    private List<Utente> like;
+    private HashSet<Utente> like;
 
     public Post (){}
 
  
 
-    public Post(String titolo, String corpo, Set<Pagina> pagina, Utente utente, List<Utente> like) {
+    public Post(String titolo, String corpo, Set<Pagina> pagina, Utente utente, HashSet<Utente> like) {
         this.titolo = titolo;
         this.corpo = corpo;
         this.pagina = pagina;
@@ -90,11 +90,11 @@ public class Post extends PanacheEntityBase{
         this.utente = utente;
     }
 
-    public List<Utente> getLike() {
+    public HashSet<Utente> getLike() {
         return like;
     }
 
-    public void setLike(List<Utente> like) {
+    public void setLike(HashSet<Utente> like) {
         this.like = like;
     }
 

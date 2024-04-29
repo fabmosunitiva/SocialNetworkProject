@@ -32,6 +32,8 @@ public class UtenteController {
     @Inject
     ResponseObject response;
 
+
+
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
@@ -120,6 +122,34 @@ public class UtenteController {
         }
         catch(DataAccessException e){
             Log.error("Errore in getUtenteById errore ad accedere al dato " + e);
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
+            .entity(response)
+            .build();
+        }
+    }
+
+    @PUT
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Path("/AddLikeToPost")
+    @Transactional
+    @Valid
+    public Response addLikeToPost(@QueryParam("idUtente") Long idUtente, @QueryParam("idPost") Long idPost) {
+        try{
+            service.addLikeToPost(idUtente,idPost);
+            response.setMessage("Aggiunto Like al post");
+            return Response.status(Response.Status.OK).type(MediaType.APPLICATION_JSON).entity(response).build();
+        }catch(NotFoundException e){
+            StackTraceElement[] stackTrace = e.getStackTrace();
+            String methodName = stackTrace[1].getMethodName();
+            Log.error("Errore in " +methodName+ " " + e);
+            response.setMessage(e.getMessage());
+            return Response.status(Response.Status.NOT_FOUND)
+            .entity(response)
+            .build();
+        }
+        catch(DataAccessException e){
+            Log.error("Errore in addLikeToPost errore ad accedere al dato " + e);
             response.setMessage(e.getMessage());
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR)
             .entity(response)
