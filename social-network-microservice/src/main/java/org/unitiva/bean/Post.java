@@ -1,6 +1,6 @@
 package org.unitiva.bean;
 
-import java.util.List;
+import java.util.HashSet;
 import java.util.Set;
 
 import io.quarkus.hibernate.orm.panache.PanacheEntityBase;
@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 public class Post extends PanacheEntityBase{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="idpost")
     private Long idpost;
 
@@ -31,10 +31,6 @@ public class Post extends PanacheEntityBase{
     @Column(name="corpo")
     private String corpo;
 
-    @ManyToMany
-    @JoinTable(name = "pagina_post",
-        joinColumns =  @JoinColumn (name="id_pagina"), inverseJoinColumns = @JoinColumn(name="id_post"))
-    private Set<Pagina> pagina;
 
     @ManyToOne
     @JoinColumn(name = "idutente")
@@ -44,13 +40,18 @@ public class Post extends PanacheEntityBase{
     @JoinTable(name = "like_post",
         joinColumns = @JoinColumn(name = "idpost"),
         inverseJoinColumns = @JoinColumn(name = "idutente"))
-    private List<Utente> like;
+    private HashSet<Utente> like;
 
     public Post (){}
 
-    public Post(String titolo, String corpo) {
+ 
+
+    public Post(String titolo, String corpo, Set<Pagina> pagina, Utente utente, HashSet<Utente> like) {
         this.titolo = titolo;
         this.corpo = corpo;
+      
+        this.utente = utente;
+        this.like = like;
     }
 
     public String getTitolo() {
@@ -69,11 +70,33 @@ public class Post extends PanacheEntityBase{
         this.corpo = corpo;
     }
 
+
+
+    public Utente getUtente() {
+        return utente;
+    }
+
+    public void setUtente(Utente utente) {
+        this.utente = utente;
+    }
+
+    public HashSet<Utente> getLike() {
+        return like;
+    }
+
+    public void setLike(HashSet<Utente> like) {
+        this.like = like;
+    }
+
+
+
     @Override
     public String toString() {
-        return "Post [titolo=" + titolo + ", corpo=" + corpo + " ]";
+        return "Post [titolo=" + titolo + ", corpo=" + corpo + ", utente=" + utente + ", like="
+                + like + "]";
     }
-    
+
+
 
 
 }

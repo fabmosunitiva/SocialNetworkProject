@@ -9,7 +9,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
@@ -30,7 +30,7 @@ public class Utente extends PanacheEntityBase {
     @Column(name="datanascita")
     private LocalDate datanascita;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="idruolo")
     private Ruolo ruolo;
 
@@ -46,10 +46,6 @@ public class Utente extends PanacheEntityBase {
 
     public Long getIdutente() {
         return idutente;
-    }
-
-    public void setIdutente(Long idutente) {
-        this.idutente = idutente;
     }
 
     public String getNome() {
@@ -83,6 +79,8 @@ public class Utente extends PanacheEntityBase {
     public void setRuolo(Ruolo ruolo) {
         this.ruolo = ruolo;
     }
+
+
 
     @Override
     public String toString() {
