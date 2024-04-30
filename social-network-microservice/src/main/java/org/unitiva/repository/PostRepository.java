@@ -14,13 +14,14 @@ public class PostRepository implements PanacheRepositoryBase<Post,Long>{
     @Inject
     UtenteRepository utenteRepository;
     
-    public void createPost(PostDTO postDTO) throws DataAccessException{
+    public Post createPost(PostDTO postDTO) throws DataAccessException{
         try {
             Post post = new Post();
             post.setTitolo(postDTO.getTitolo());
             post.setCorpo(postDTO.getCorpo());
             post.setUtente(utenteRepository.retrieveUtenteById(postDTO.getIdUtente()));
             persist(post);  
+            return post;
         } catch (Exception e) {
             throw new DataAccessException("Impossibile eseguire la creazione del post", e.getCause(),false,true);
         }

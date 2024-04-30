@@ -21,7 +21,7 @@ import jakarta.persistence.Table;
 public class Post extends PanacheEntityBase{
 
     @Id
-    @GeneratedValue(strategy=GenerationType.AUTO)
+    @GeneratedValue(strategy=GenerationType.SEQUENCE)
     @Column(name="idpost")
     private Long idpost;
 
@@ -31,10 +31,6 @@ public class Post extends PanacheEntityBase{
     @Column(name="corpo")
     private String corpo;
 
-    @ManyToMany
-    @JoinTable(name = "pagina_post",
-        joinColumns =  @JoinColumn (name="id_pagina"), inverseJoinColumns = @JoinColumn(name="id_post"))
-    private Set<Pagina> pagina;
 
     @ManyToOne
     @JoinColumn(name = "idutente")
@@ -53,7 +49,7 @@ public class Post extends PanacheEntityBase{
     public Post(String titolo, String corpo, Set<Pagina> pagina, Utente utente, HashSet<Utente> like) {
         this.titolo = titolo;
         this.corpo = corpo;
-        this.pagina = pagina;
+      
         this.utente = utente;
         this.like = like;
     }
@@ -74,13 +70,7 @@ public class Post extends PanacheEntityBase{
         this.corpo = corpo;
     }
 
-    public Set<Pagina> getPagina() {
-        return pagina;
-    }
 
-    public void setPagina(Set<Pagina> pagina) {
-        this.pagina = pagina;
-    }
 
     public Utente getUtente() {
         return utente;
@@ -102,7 +92,7 @@ public class Post extends PanacheEntityBase{
 
     @Override
     public String toString() {
-        return "Post [titolo=" + titolo + ", corpo=" + corpo + ", pagina=" + pagina + ", utente=" + utente + ", like="
+        return "Post [titolo=" + titolo + ", corpo=" + corpo + ", utente=" + utente + ", like="
                 + like + "]";
     }
 

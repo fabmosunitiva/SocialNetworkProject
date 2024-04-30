@@ -21,8 +21,9 @@ public class PostService {
     @Inject
     UtenteService utenteService;
 
-    public void save (PostDTO postDTO) throws DataAccessException{
-        postRepository.createPost(postDTO);
+    public Post save (PostDTO postDTO) throws DataAccessException{
+        Post post = postRepository.createPost(postDTO);
+        return post;
     }
 
     public void updatePost (PostDTO postDTO) throws DataAccessException{
