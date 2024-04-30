@@ -1,5 +1,8 @@
 package org.unitiva.repository;
 
+import java.time.LocalDate;
+import java.util.List;
+
 import org.unitiva.bean.Utente;
 import org.unitiva.exception.database.DataAccessException;
 
@@ -41,6 +44,11 @@ public class UtenteRepository implements PanacheRepositoryBase<Utente, Long> {
         } catch (Exception e) {
             throw new DataAccessException("Impossibile eseguire la retrieve dell'utente", e.getCause(), false, true);
         }
+    }
+
+    public List<Utente> findCompleanno(){
+        String query = "from User u where month(u.datanascita) = ?1 and dayOfMonth(u.datanascita) = ?2";
+        return find(query, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()).list();
     }
 
 }

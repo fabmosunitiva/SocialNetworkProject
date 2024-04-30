@@ -2,6 +2,7 @@ package org.unitiva.service;
 
 import java.time.LocalDate;
 import java.util.HashSet;
+import java.util.List;
 
 import org.unitiva.bean.Post;
 import org.unitiva.bean.Ruolo;
@@ -11,6 +12,7 @@ import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.UtenteRepository;
 
+import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -82,5 +84,16 @@ public class UtenteService {
         utente.setDatanascita(dataDiNascita);
         utente.setRuolo(ruolo);
         return utente;
+    }
+
+    private void compleannoAlert(){
+        List<Utente> compleanni = utenteRepository.findCompleanno();
+        if(!compleanni.isEmpty()){
+            for(Utente u : compleanni){
+                Log.info("Auguri all'utente: " + u.getNome());
+            }
+        }else{
+            Log.info("Oggi non c'è nessun compleanno");
+        }
     }
 }
