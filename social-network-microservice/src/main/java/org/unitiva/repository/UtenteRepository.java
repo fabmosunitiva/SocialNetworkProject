@@ -47,7 +47,7 @@ public class UtenteRepository implements PanacheRepositoryBase<Utente, Long> {
     }
 
     public List<Utente> findCompleanno(){
-        String query = "from User u where month(u.datanascita) = ?1 and dayOfMonth(u.datanascita) = ?2";
+        String query = "from Utente u where month(u.datanascita) = ?1 and day(u.datanascita) = ?2";
         return find(query, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()).list();
     }
 
