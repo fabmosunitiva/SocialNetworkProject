@@ -85,29 +85,10 @@ public class UtenteService {
         return utente;
     }
 
-    @Scheduled(every="120s")
-    public void compleannoAlert(){
-        List<Utente> compleanni = utenteRepository.findCompleanno();
-        if(!compleanni.isEmpty()){
-            for(Utente u : compleanni){
-                Log.info("Auguri all'utente: " + u.getNome());
-            }
-        }else{
-            Log.info("Oggi non c'è nessun compleanno");
-        }
+    public List<Utente> findCompleanniOggi(){
+       return utenteRepository.findCompleanniOggi();
     }
 
-    // @Scheduled(every="120s")
-    // public void compleanni(){
-    //     List<Utente> listaUtenti = utenteRepository.listAll();
-    //     int mese = LocalDate.now().getMonthValue();
-    //     int giorno = LocalDate.now().getDayOfMonth();
 
-    //     for (Utente utente : listaUtenti){
-    //         if (utente.getDatanascita().getMonthValue()==mese && utente.getDatanascita().getDayOfMonth()==giorno){
-    //             Log.info("-------- AUGURI "+utente.getNome()+" !!!!");
-    //         }
-    //     }
-    // }
 
 }
