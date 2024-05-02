@@ -32,8 +32,6 @@ public class UtenteController {
     @Inject
     ResponseObject response;
 
-
-
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)

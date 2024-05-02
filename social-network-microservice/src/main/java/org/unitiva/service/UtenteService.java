@@ -12,8 +12,6 @@ import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.UtenteRepository;
 
-import io.quarkus.logging.Log;
-import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -98,4 +96,18 @@ public class UtenteService {
             Log.info("Oggi non c'è nessun compleanno");
         }
     }
+
+    // @Scheduled(every="120s")
+    // public void compleanni(){
+    //     List<Utente> listaUtenti = utenteRepository.listAll();
+    //     int mese = LocalDate.now().getMonthValue();
+    //     int giorno = LocalDate.now().getDayOfMonth();
+
+    //     for (Utente utente : listaUtenti){
+    //         if (utente.getDatanascita().getMonthValue()==mese && utente.getDatanascita().getDayOfMonth()==giorno){
+    //             Log.info("-------- AUGURI "+utente.getNome()+" !!!!");
+    //         }
+    //     }
+    // }
+
 }
