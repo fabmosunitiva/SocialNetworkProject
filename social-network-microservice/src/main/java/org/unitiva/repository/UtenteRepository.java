@@ -1,6 +1,7 @@
 package org.unitiva.repository;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.unitiva.bean.Utente;
@@ -49,6 +50,21 @@ public class UtenteRepository implements PanacheRepositoryBase<Utente, Long> {
     public List<Utente> findCompleanno(){
         String query = "from Utente u where month(u.datanascita) = ?1 and day(u.datanascita) = ?2";
         return find(query, LocalDate.now().getMonthValue(), LocalDate.now().getDayOfMonth()).list();
+    }
+
+    public List<Utente> findCompleanniOggi (){
+        List<Utente> listaUtenti = listAll();
+        int mese = LocalDate.now().getMonthValue();
+        int giorno = LocalDate.now().getDayOfMonth();
+
+        List<Utente> listaCompleanni = new ArrayList<Utente>();
+
+        for (Utente utente : listaUtenti){
+                     if (utente.getDatanascita().getMonthValue()==mese && utente.getDatanascita().getDayOfMonth()==giorno){
+                        listaCompleanni.add(utente);
+                     }
+                 }
+        return listaCompleanni;
     }
 
 }

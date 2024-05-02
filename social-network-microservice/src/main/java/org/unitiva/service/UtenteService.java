@@ -12,8 +12,6 @@ import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.UtenteRepository;
 
-import io.quarkus.logging.Log;
-import io.quarkus.scheduler.Scheduled;
 import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.inject.Inject;
 
@@ -87,15 +85,10 @@ public class UtenteService {
         return utente;
     }
 
-    @Scheduled(every="120s")
-    public void compleannoAlert(){
-        List<Utente> compleanni = utenteRepository.findCompleanno();
-        if(!compleanni.isEmpty()){
-            for(Utente u : compleanni){
-                Log.info("Auguri all'utente: " + u.getNome());
-            }
-        }else{
-            Log.info("Oggi non c'è nessun compleanno");
-        }
+    public List<Utente> findCompleanniOggi(){
+       return utenteRepository.findCompleanniOggi();
     }
+
+
+
 }

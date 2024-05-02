@@ -1,0 +1,64 @@
+openapi: "3.0.0"
+info:
+  version: "1.0.0"
+  title: "Post API"
+paths:
+  /post/new:
+    post:
+      summary: "Create a new post"
+      consumes:
+        - "application/json"
+      responses:
+        200:
+          description: "Post created successfully"
+        500:
+          description: "Internal server error"
+  /post/update:
+    put:
+      summary: "Update a post"
+      consumes:
+        - "application/json"
+      responses:
+        200:
+          description: "Post updated successfully"
+        304:
+          description: "Not modified"
+        401:
+          description: "Unauthorized"
+  /post/delete:
+    delete:
+      summary: "Delete a post"
+      parameters:
+        - name: "idPost"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+        - name: "idUtente"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Post deleted successfully"
+        403:
+          description: "Forbidden"
+        500:
+          description: "Internal server error"
+  /post/find:
+    post:
+      summary: "Find a post by ID"
+      parameters:
+        - name: "id"
+          in: "query"
+          required: true
+          schema:
+            type: "integer"
+      responses:
+        200:
+          description: "Post found"
+        404:
+          description: "Not found"
+        500:
+          description: "Internal server error"
