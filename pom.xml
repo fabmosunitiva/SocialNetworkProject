@@ -29,7 +29,7 @@
   </build>
 
   <modules>
-    <module>database-social-network</module>
     <module>social-network-microservice</module>
+    <module>database-social-network-microservices</module>
   </modules>
 </project>
