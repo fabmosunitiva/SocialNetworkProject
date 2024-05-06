@@ -36,8 +36,8 @@
       <artifactId>quarkus-hibernate-orm-rest-data-panache</artifactId>
     </dependency>
     <dependency>
-      <groupId>com.example</groupId>
-      <artifactId>database-social-network</artifactId>
+      <groupId>org.example</groupId>
+      <artifactId>database-social-network-microservices</artifactId>
       <version>1.0-SNAPSHOT</version>
     </dependency>
     <dependency>
