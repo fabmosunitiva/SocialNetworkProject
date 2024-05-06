@@ -8,7 +8,6 @@ import org.unitiva.service.UtenteService;
 
 import io.quarkus.logging.Log;
 import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
@@ -26,11 +25,10 @@ import jakarta.ws.rs.core.Response;
 @Path("/Utente")
 @ApplicationScoped
 public class UtenteController {
-    @Inject
-    UtenteService service;
+    
+    UtenteService service = new UtenteService();
 
-    @Inject
-    ResponseObject response;
+    ResponseObject response = new ResponseObject();
 
     @POST
     @Consumes(MediaType.APPLICATION_JSON)

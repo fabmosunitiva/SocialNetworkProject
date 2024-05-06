@@ -14,8 +14,7 @@ import jakarta.inject.Inject;
 @ApplicationScoped
 public class AuguriProducer {
 
-    @Inject
-    UtenteService utenteService;
+    UtenteService utenteService = new UtenteService();
 
     @Inject
     @Channel("auguri-out")

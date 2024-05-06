@@ -5,7 +5,7 @@
   <groupId>org.unitiva</groupId>
   <artifactId>social-network-microservice</artifactId>
   <version>1.0.0-SNAPSHOT</version>
-  <packaging>pom</packaging>
+  <packaging>jar</packaging>
   <properties>
     <compiler-plugin.version>3.12.1</compiler-plugin.version>
     <maven.compiler.release>17</maven.compiler.release>
@@ -32,15 +32,6 @@
 
   <!-- dipendenze portate in microservice-peristent: INIZIO -->
     <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm-rest-data-panache</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>org.example</groupId>
-      <artifactId>database-social-network-microservices</artifactId>
-      <version>1.0-SNAPSHOT</version>
-    </dependency>
-    <dependency>
       <groupId>org.unitiva</groupId>
       <artifactId>microservice-persistent</artifactId>
       <version>1.0-SNAPSHOT</version>
@@ -48,14 +39,6 @@
     <dependency>
       <groupId>io.quarkus</groupId>
       <artifactId>quarkus-jdbc-postgresql</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm</artifactId>
-    </dependency>
-    <dependency>
-      <groupId>io.quarkus</groupId>
-      <artifactId>quarkus-hibernate-orm-panache</artifactId>
     </dependency>
   <!-- dipendenze portate in microservice-peristent: FINE -->
 

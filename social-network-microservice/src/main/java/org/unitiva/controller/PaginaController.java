@@ -19,11 +19,10 @@ import jakarta.ws.rs.core.Response;
 @Path("/pagina")
 public class PaginaController {
 
-    @Inject
-    PaginaService paginaService;
+   
+    PaginaService paginaService = new PaginaService();
 
-    @Inject
-    PostService postService;
+    PostService postService = new PostService();
 
     @POST
     @Path("/new")

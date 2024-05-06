@@ -19,8 +19,7 @@ import jakarta.ws.rs.core.Response;
 @Path("/commento")
 public class CommentoController{
 
-    @Inject
-    CommentoService commentoService;
+    CommentoService commentoService = new CommentoService();
 
     @POST
     @Path("/new")
