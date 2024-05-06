@@ -6,9 +6,6 @@
   <artifactId>social-network-microservice</artifactId>
   <version>1.0.0-SNAPSHOT</version>
   <packaging>pom</packaging>
-  <modules>
-    <module>utente</module>
-  </modules>
   <properties>
     <compiler-plugin.version>3.12.1</compiler-plugin.version>
     <maven.compiler.release>17</maven.compiler.release>
