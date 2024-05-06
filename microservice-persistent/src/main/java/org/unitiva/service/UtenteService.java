@@ -4,6 +4,9 @@ import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.unitiva.bean.Post;
 import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
@@ -11,9 +14,6 @@ import org.unitiva.dto.UtenteDTO;
 import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.UtenteRepository;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class UtenteService {

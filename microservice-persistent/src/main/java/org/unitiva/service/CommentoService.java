@@ -1,12 +1,12 @@
 package org.unitiva.service;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.unitiva.bean.Commento;
 import org.unitiva.bean.Utente;
 import org.unitiva.dto.CommentoDTO;
 import org.unitiva.repository.CommentoRepository;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class CommentoService {

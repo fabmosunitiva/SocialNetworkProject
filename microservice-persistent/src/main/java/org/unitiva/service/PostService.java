@@ -1,5 +1,8 @@
 package org.unitiva.service;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.unitiva.bean.Post;
 import org.unitiva.bean.Ruolo;
 import org.unitiva.bean.Utente;
@@ -8,9 +11,6 @@ import org.unitiva.exception.NotFoundException;
 import org.unitiva.exception.UserNotAllowed;
 import org.unitiva.exception.database.DataAccessException;
 import org.unitiva.repository.PostRepository;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class PostService {

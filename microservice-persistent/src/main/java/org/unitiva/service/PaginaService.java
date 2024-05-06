@@ -1,11 +1,11 @@
 package org.unitiva.service;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.unitiva.bean.Pagina;
 import org.unitiva.dto.PaginaDTO;
 import org.unitiva.repository.PaginaRepository;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class PaginaService {

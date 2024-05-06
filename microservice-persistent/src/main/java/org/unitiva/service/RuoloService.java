@@ -1,10 +1,10 @@
 package org.unitiva.service;
 
+import javax.enterprise.context.ApplicationScoped;
+import javax.inject.Inject;
+
 import org.unitiva.bean.Ruolo;
 import org.unitiva.repository.RuoloRepository;
-
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.inject.Inject;
 
 @ApplicationScoped
 public class RuoloService {

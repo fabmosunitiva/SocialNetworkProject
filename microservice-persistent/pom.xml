@@ -18,13 +18,17 @@
         <maven.compiler.target>17</maven.compiler.target>
         <quarkus.version>2.7.1.Final</quarkus.version> 
     </properties>
-
     <dependencies>
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-hibernate-orm-rest-data-panache</artifactId>
             <version>${quarkus.version}</version>
         </dependency>	
+        <dependency>
+      <groupId>io.quarkus</groupId>
+      <artifactId>quarkus-arc</artifactId>
+            <version>${quarkus.version}</version>
+    </dependency>
 	    <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-postgresql</artifactId>
