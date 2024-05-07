@@ -7,7 +7,6 @@ import org.unitiva.bean.Post;
 import org.unitiva.service.PaginaService;
 import org.unitiva.service.PostService;
 
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;

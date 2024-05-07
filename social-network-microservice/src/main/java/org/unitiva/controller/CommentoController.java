@@ -5,7 +5,6 @@ import org.unitiva.bean.Commento;
 import org.unitiva.dto.CommentoDTO;
 import org.unitiva.service.CommentoService;
 
-import jakarta.inject.Inject;
 import jakarta.transaction.Transactional;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
